@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Track Insert Configurator</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <div class="app">
+        <!-- Left Panel: Controls -->
+        <div class="controls">
+            <h1>T-Track <span>Insert Configurator</span></h1>
+
+            <!-- Unit Toggle -->
+            <div class="unit-toggle">
+                <button id="unit-mm" class="active">mm</button>
+                <button id="unit-in">inches</button>
+            </div>
+
+            <!-- T-Track Profile -->
+            <div class="param-group">
+                <h2>T-Track Profile</h2>
+                <div class="param-row">
+                    <label for="slot_width">Slot Width</label>
+                    <input type="number" id="slot_width" data-param="slot_width" step="0.1">
+                </div>
+                <div class="param-row">
+                    <label for="lip_width">Lip Width</label>
+                    <input type="number" id="lip_width" data-param="lip_width" step="0.1">
+                </div>
+                <div class="param-row">
+                    <label for="slot_depth">Slot Depth</label>
+                    <input type="number" id="slot_depth" data-param="slot_depth" step="0.1">
+                </div>
+                <div class="param-row">
+                    <label for="lip_depth">Lip Depth</label>
+                    <input type="number" id="lip_depth" data-param="lip_depth" step="0.1">
+                </div>
+            </div>
+
+            <!-- Bolt Dimensions -->
+            <div class="param-group">
+                <h2>Bolt Dimensions</h2>
+                <div class="param-row">
+                    <label for="head_width">Head Width (F2F)</label>
+                    <input type="number" id="head_width" data-param="head_width" step="0.1">
+                </div>
+                <div class="param-row">
+                    <label for="head_height">Head Height</label>
+                    <input type="number" id="head_height" data-param="head_height" step="0.1">
+                </div>
+                <div class="param-row">
+                    <label for="shaft_diameter">Shaft Diameter</label>
+                    <input type="number" id="shaft_diameter" data-param="shaft_diameter" step="0.1">
+                </div>
+            </div>
+
+            <!-- Insert Dimensions -->
+            <div class="param-group">
+                <h2>Insert</h2>
+                <div class="param-row">
+                    <label for="insert_length">Length</label>
+                    <input type="number" id="insert_length" data-param="insert_length" step="0.1">
+                </div>
+                <div class="param-row">
+                    <label for="chamfer">Chamfer</label>
+                    <input type="number" id="chamfer" data-param="chamfer" step="0.1">
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div class="status" id="status">Ready</div>
+
+            <!-- Render -->
+            <button class="render-btn" id="render-btn">Render</button>
+
+            <!-- Download -->
+            <button class="download-btn" id="download-btn" disabled>Download STL</button>
+        </div>
+
+        <!-- Right Panel: 3D Viewer -->
+        <div class="viewer" id="viewer-container"></div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

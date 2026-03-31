@@ -1,0 +1,192 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app {
+    display: flex;
+    height: 100vh;
+}
+
+/* --- Left Panel: Controls --- */
+.controls {
+    width: 320px;
+    min-width: 320px;
+    padding: 24px;
+    background: #16213e;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-right: 1px solid #0f3460;
+}
+
+.controls h1 {
+    font-size: 1.2rem;
+    color: #e94560;
+    margin-bottom: 4px;
+}
+
+.controls h1 span {
+    color: #e0e0e0;
+    font-weight: 300;
+}
+
+/* Unit toggle */
+.unit-toggle {
+    display: flex;
+    background: #0f3460;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.unit-toggle button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    color: #a0a0a0;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.unit-toggle button.active {
+    background: #e94560;
+    color: #fff;
+}
+
+/* Parameter groups */
+.param-group h2 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #a0a0a0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #0f3460;
+    padding-bottom: 6px;
+}
+
+.param-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.param-row label {
+    font-size: 0.85rem;
+    color: #c0c0c0;
+}
+
+.param-row input {
+    width: 90px;
+    padding: 6px 8px;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.85rem;
+    text-align: right;
+}
+
+.param-row input:focus {
+    outline: none;
+    border-color: #e94560;
+}
+
+/* Render button */
+.render-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #0f3460;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.render-btn:hover {
+    background: #1a4f8a;
+}
+
+/* Download button */
+.download-btn {
+    margin-top: auto;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #e94560;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.download-btn:hover {
+    background: #c73e54;
+}
+
+.download-btn:disabled {
+    background: #555;
+    cursor: not-allowed;
+}
+
+/* Status bar */
+.status {
+    font-size: 0.75rem;
+    color: #a0a0a0;
+    text-align: center;
+    min-height: 1.2em;
+}
+
+.status.error {
+    color: #e94560;
+}
+
+.status.loading {
+    color: #f0c040;
+}
+
+/* --- Right Panel: 3D Viewer --- */
+.viewer {
+    flex: 1;
+    position: relative;
+}
+
+.viewer canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Responsive: Mobile --- */
+@media (max-width: 768px) {
+    .app {
+        flex-direction: column;
+        height: auto;
+        overflow: auto;
+    }
+
+    .controls {
+        width: 100%;
+        min-width: unset;
+        max-height: 50vh;
+        border-right: none;
+        border-bottom: 1px solid #0f3460;
+    }
+
+    .viewer {
+        height: 50vh;
+    }
+}

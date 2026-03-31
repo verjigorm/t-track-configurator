@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:schroer.ca)",
+      "WebFetch(domain:www.jsdelivr.com)",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "WebFetch(domain:ochafik.com)",
+      "Bash(curl -sI https://cdn.jsdelivr.net/npm/openscad-wasm@0.0.4/openscad.js)",
+      "Bash(curl -s --range 0-3000 \"https://cdn.jsdelivr.net/npm/openscad-wasm@0.0.4/openscad.js\")",
+      "Bash(curl -s --range 13900000-13950000 https://cdn.jsdelivr.net/npm/openscad-wasm@0.0.4/openscad.js)"
+    ]
+  }
+}
