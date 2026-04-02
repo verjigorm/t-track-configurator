@@ -170,7 +170,44 @@ async function loadDiagram() {
     });
 }
 
+const BOLT_DIAGRAM_MAP = {
+    head_width:     { line: 'infoline-0-path-effect9', label: 'text18' },
+    head_height:    { line: 'infoline-7-path-effect9', label: 'text17' },
+    shaft_diameter: { line: 'infoline-4-path-effect9', label: 'text19' },
+};
+
+function applyBoltDiagramTheme() {
+    const bolt = document.querySelector('#bolt-diagram #path1');
+    if (bolt) { bolt.style.fill = '#c8d4e0'; bolt.style.stroke = '#c8d4e0'; }
+    // Internal drawing lines (threads, dividers) — blend into panel background
+    ['path2','path3','path4','path5','path6','path7','path8','path9'].forEach(id => {
+        const el = document.querySelector(`#bolt-diagram #${id}`);
+        if (el) el.style.stroke = '#16213e';
+    });
+    document.querySelectorAll('#bolt-diagram .measure-line').forEach(el => {
+        el.style.stroke = DIAGRAM_BASE;
+    });
+    document.querySelectorAll('#bolt-diagram text').forEach(el => {
+        el.style.fill = DIAGRAM_BASE;
+        el.style.stroke = 'none';
+    });
+}
+
+async function loadBoltDiagram() {
+    const container = document.getElementById('bolt-diagram');
+    const text = await fetch('./bolt_diagram.svg').then(r => r.text());
+    container.innerHTML = text;
+    applyBoltDiagramTheme();
+    paramInputs.forEach(input => {
+        const map = BOLT_DIAGRAM_MAP[input.dataset.param];
+        if (!map) return;
+        input.addEventListener('focus', () => highlightDiagram(map, true));
+        input.addEventListener('blur',  () => highlightDiagram(map, false));
+    });
+}
+
 // --- Init ---
 initViewer(viewerContainer);
 loadScadDefaults().then(() => requestGeneration());
 loadDiagram();
+loadBoltDiagram();
