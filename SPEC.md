@@ -14,7 +14,10 @@ A sliding insert that fits inside a T-track channel. It has:
 - A **hex bolt head pocket** on the underside, capturing a standard hex bolt head.
 - A **clearance hole** through the body for the bolt's threaded shaft, which protrudes upward through the top of the insert.
 - **Single bolt** per insert.
-- **Fixed 1mm chamfers** on edges for easier insertion and better print quality. Not user-configurable.
+- **0.5mm chamfers** on edges for easier insertion and better print quality.
+- rectangular steps at the bottom of the bolt head cavity which enable printing without supports using bridging 
+- an image/legend showing visually what each measurement means
+
 
 The user slides the insert into the T-track from one end. A bolt is placed head-down into the pocket, and the threaded shaft sticks up through the track slot for fastening.
 
@@ -28,7 +31,8 @@ All dimensions are user-specified with sensible defaults. Units are switchable b
 | ---------------- | ---------------------------------------- | ------------ |
 | Slot width       | Width of the narrow slot opening on top  | 19.0         |
 | Lip width        | Width of the wider undercut below        | 30.0         |
-| Track depth      | Height of the T-track channel            | 11.0         |
+| Slot depth       | Height of the T-track slot part          | 11.0         |
+| Lip depth        | Height of the T-track lip part           | 11.0         |
 
 ### Bolt Dimensions
 
@@ -43,6 +47,7 @@ All dimensions are user-specified with sensible defaults. Units are switchable b
 | Parameter        | Description                              | Default (mm) |
 | ---------------- | ---------------------------------------- | ------------ |
 | Insert length    | Total length of the insert body          | 25.0         |
+| Chamfer          | The chamfer on edges parallel to the track | 0.5        |
 
 ## User Interface
 
@@ -55,8 +60,8 @@ All dimensions are user-specified with sensible defaults. Units are switchable b
 
 - Labeled input fields for each parameter, grouped by category (Track, Bolt, Insert).
 - Unit toggle (mm / inches) that converts all displayed values.
+- Render button triggering the update of the rendered onject
 - "Generate STL" / "Download" button.
-- Preview updates automatically when parameters change (with debounce).
 
 ### 3D Preview
 

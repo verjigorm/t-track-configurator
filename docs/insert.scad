@@ -21,8 +21,11 @@ shaft_diameter = 8.2;   // Bolt shaft clearance diameter
 // --- Insert Dimensions ---
 insert_length = 25;
 
+// --- Print Settings ---
+layer_height = 0.2;  // Bridge step depth at top of hex pocket (enables support-free printing)
+
 // --- Fixed ---
-chamfer = 0.2;
+chamfer = 0.5;
 
 // Derived
 total_depth = slot_depth + lip_depth;
@@ -73,8 +76,24 @@ module shaft_hole() {
         cylinder(h = total_depth + 0.02, d = shaft_diameter, $fn = 32);
 }
 
+module bridge_step() {
+    // Thin rectangular slot at the ceiling of the hex pocket (Z = head_height).
+    // Width matches the shaft hole so the printer can bridge without supports.
+    translate([-shaft_diameter/2, -head_width/2, head_height])
+        cube([shaft_diameter, head_width, layer_height]);
+}
+
+module bridge_step_square() {
+    // Square slot one layer above the first bridge step.
+    // head_width × head_width, centered on the shaft hole.
+    translate([-shaft_diameter/2, -shaft_diameter/2, head_height + layer_height])
+        cube([shaft_diameter, shaft_diameter, layer_height]);
+}
+
 difference() {
     t_body();
     hex_pocket();
     shaft_hole();
+    bridge_step();
+    bridge_step_square();
 }

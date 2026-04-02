@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="297mm"
+   height="210mm"
+   viewBox="0 0 1122.5197 793.70081"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="t_track_diagram.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <style
+     id="style10">
+.measure-arrow
+{
+}
+.measure-label
+{
+
+}
+.measure-line
+{
+}</style>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="1.4396918"
+     inkscape:cx="466.76656"
+     inkscape:cy="443.1504"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1">
+    <inkscape:grid
+       id="grid1"
+       units="mm"
+       originx="0"
+       originy="0"
+       spacingx="3.7795277"
+       spacingy="3.7795276"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14902"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="measure_segments"
+       linked_items=""
+       id="path-effect21"
+       is_visible="true"
+       lpeversion="1.3.1"
+       unit="mm"
+       orientation="parallel"
+       coloropacity="#000000ff"
+       fontbutton="Sans 10"
+       precision="2"
+       fix_overlaps="0"
+       position="40"
+       text_top_bottom="0"
+       helpline_distance="0"
+       helpline_overlap="2"
+       line_width="0.55"
+       scale="1"
+       format=" "
+       blacklist=""
+       active_projection="false"
+       whitelist="false"
+       showindex="false"
+       arrows_outside="false"
+       flip_side="true"
+       scale_sensitive="true"
+       local_locale="true"
+       rotate_anotation="true"
+       hide_back="true"
+       hide_arrows="false"
+       smallx100="false"
+       distance_projection="20"
+       angle_projection="0"
+       avoid_overlapping="true"
+       onbbox="false"
+       bboxonly="false"
+       centers="false"
+       maxmin="false"
+       helpdata="" />
+    <inkscape:path-effect
+       effect="measure_segments"
+       linked_items=""
+       id="path-effect10"
+       is_visible="true"
+       lpeversion="1.3.1"
+       unit="mm"
+       orientation="parallel"
+       coloropacity="#000000ff"
+       fontbutton="Sans 10"
+       precision="2"
+       fix_overlaps="0"
+       position="40"
+       text_top_bottom="0"
+       helpline_distance="0"
+       helpline_overlap="2"
+       line_width="0.55"
+       scale="1"
+       format=" "
+       blacklist="5,7,8"
+       active_projection="false"
+       whitelist="true"
+       showindex="false"
+       arrows_outside="false"
+       flip_side="true"
+       scale_sensitive="true"
+       local_locale="true"
+       rotate_anotation="true"
+       hide_back="true"
+       hide_arrows="false"
+       smallx100="false"
+       distance_projection="20"
+       angle_projection="0"
+       avoid_overlapping="true"
+       onbbox="false"
+       bboxonly="false"
+       centers="false"
+       maxmin="false"
+       helpdata="" />
+    <marker
+       id="ArrowDIN-start"
+       class="path1 path-effect10 measure-arrow-marker"
+       inkscape:stockid="ArrowDIN-start"
+       orient="auto"
+       refX="0.0"
+       refY="0.0"
+       sodipodi:insensitive="true">
+      <path
+         d="M -8,0 8,-2.11 8,2.11 z"
+         class="path1 path-effect10 measure-arrow"
+         id="ArrowDIN-start_path"
+         style="fill:context-stroke;;fill-opacity:1;stroke:none" />
+    </marker>
+    <marker
+       id="ArrowDIN-end"
+       class="path1 path-effect10 measure-arrow-marker"
+       inkscape:stockid="ArrowDIN-end"
+       orient="auto"
+       refX="0.0"
+       refY="0.0"
+       sodipodi:insensitive="true">
+      <path
+         d="M 8,0 -8,2.11 -8,-2.11 z"
+         class="path1 path-effect10 measure-arrow"
+         id="ArrowDIN-end_path"
+         style="fill:context-stroke;;fill-opacity:1;stroke:none" />
+    </marker>
+    <marker
+       id="ArrowDINout-start"
+       class="path1 path-effect10 measure-arrow-marker"
+       inkscape:stockid="ArrowDINout-start"
+       orient="auto"
+       refX="0.0"
+       refY="0.0"
+       sodipodi:insensitive="true">
+      <path
+         d="M 0,0 -16,2.11 -16,0.5 -26,0.5 -26,-0.5 -16,-0.5 -16,-2.11 z"
+         class="path1 path-effect10 measure-arrow"
+         id="ArrowDINout-start_path"
+         style="fill:context-stroke;;fill-opacity:1;stroke:none" />
+    </marker>
+    <marker
+       id="ArrowDINout-end"
+       class="path1 path-effect10 measure-arrow-marker"
+       inkscape:stockid="ArrowDINout-end"
+       orient="auto"
+       refX="0.0"
+       refY="0.0"
+       sodipodi:insensitive="true">
+      <path
+         d="M 0,0 16,-2.11 16,-0.5 26,-0.5 26,0.5 16,0.5 16,2.11 z"
+         class="path1 path-effect10 measure-arrow"
+         id="ArrowDINout-end_path"
+         style="fill:context-stroke;;fill-opacity:1;stroke:none" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#000000;stroke:#ffffff;stroke-width:1.3247;stroke-opacity:1"
+       d="M 359.05512,75.590555 H 56.692914 V 737.00791 H 1077.1654 V 75.590555 H 774.80316 V 245.6693 H 907.08662 V 566.92916 H 226.77166 V 245.6693 h 132.28346 z"
+       id="path1"
+       sodipodi:nodetypes="ccccccccccccc"
+       inkscape:path-effect="#path-effect10"
+       inkscape:original-d="M 359.05512,75.590555 H 56.692914 l 0,661.417355 H 1077.1654 l 0,-661.417355 H 774.80316 l 0,170.078745 H 907.08662 V 566.92916 H 226.77166 V 245.6693 h 132.28346 z"
+       inkscape:label="t_track" />
+    <path
+       style="fill:none;stroke:none;stroke-width:1.00157;stroke-dasharray:none;stroke-opacity:1"
+       d="M 359.05512,75.590555 H 774.80316"
+       id="path21"
+       inkscape:path-effect="#path-effect21"
+       inkscape:original-d="M 359.05512,75.590555 H 774.80316"
+       transform="translate(0,170)"
+       inkscape:label="helper_line" />
+    <text
+       xml:space="preserve"
+       style="font-size:12.9626px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:37.7953;display:inline;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.0734886;stroke-dasharray:none;stroke-opacity:1"
+       x="548.03149"
+       y="56.692917"
+       id="text23"
+       transform="matrix(4.349044,0,0,6.0220163,-1854.2716,-77.026769)"
+       inkscape:label="slot_width"><tspan
+         x="548.03149"
+         y="56.692917"
+         id="tspan2"><tspan
+           style="font-weight:bold;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
+           id="tspan1">W1</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:13.0906px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:37.7953;display:inline;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.0742146;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1"
+       x="548.03149"
+       y="56.692917"
+       id="text23-8"
+       transform="matrix(3.9572611,0,0,6.0453732,-1639.2589,167.32491)"
+       inkscape:label="lip_width"><tspan
+         x="548.03149"
+         y="56.692917"
+         id="tspan4"><tspan
+           style="font-weight:bold;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
+           id="tspan3">W2</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.427px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:37.7953;display:inline;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.0704525;stroke-dasharray:none;stroke-opacity:1"
+       x="548.03149"
+       y="56.692917"
+       id="text23-8-1"
+       transform="matrix(5.7966078,0,0,6.2995717,-2539.1953,-187.27522)"
+       inkscape:label="slot_depth"><tspan
+         x="548.03149"
+         y="56.692917"
+         id="tspan7"><tspan
+           style="font-weight:bold;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
+           id="tspan5">D1</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:11.1398px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:37.7953;display:inline;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.063155;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1"
+       x="548.03149"
+       y="56.692917"
+       id="text23-8-2"
+       transform="matrix(5.8396995,0,0,7.0301176,-2448.931,16.987849)"
+       inkscape:label="lip_depth"><tspan
+         x="548.03149"
+         y="56.692917"
+         id="tspan23"><tspan
+           style="font-weight:bold;font-family:Arial;-inkscape-font-specification:'Arial Bold'"
+           id="tspan9">D2</tspan></tspan></text>
+  </g>
+  <path
+     id="infoline-on-start-0-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-0-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="0"
+     y="0"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"><tspan
+       sodipodi:role="line"
+       id="tspan10"
+       style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"> </tspan></text>
+  <path
+     id="infoline-on-end-0-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-0-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-1-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-1-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="0"
+     y="0"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"><tspan
+       sodipodi:role="line"
+       id="tspan11"
+       style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"> </tspan></text>
+  <path
+     id="infoline-on-end-1-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-1-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-2-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-2-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="0"
+     y="0"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"><tspan
+       sodipodi:role="line"
+       id="tspan12"
+       style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"> </tspan></text>
+  <path
+     id="infoline-on-end-2-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-2-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-3-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-3-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="0"
+     y="0"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"><tspan
+       sodipodi:role="line"
+       id="tspan13"
+       style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"> </tspan></text>
+  <path
+     id="infoline-on-end-3-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-3-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-4-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-4-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="0"
+     y="0"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"><tspan
+       sodipodi:role="line"
+       id="tspan14"
+       style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"> </tspan></text>
+  <path
+     id="infoline-on-end-4-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-4-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-5-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="m 774.80316,75.590555 h -42"
+     sodipodi:insensitive="true"
+     inkscape:label="dinhelpline"
+     style="stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-5-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="740.13649"
+     y="160.62993"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px"
+     transform="rotate(-90,740.13649,160.62993)"><tspan
+       sodipodi:role="line"
+       id="tspan15"> </tspan></text>
+  <path
+     id="infoline-on-end-5-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="m 774.80316,245.6693 h -42"
+     sodipodi:insensitive="true"
+     inkscape:label="dinhelpline"
+     style="stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-5-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="m 734.80316,92.220477 v 68.409453 m 0,0 v 68.40945"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-6-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-6-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="0"
+     y="0"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"><tspan
+       sodipodi:role="line"
+       id="tspan16"
+       style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"> </tspan></text>
+  <path
+     id="infoline-on-end-6-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-6-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-7-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="m 907.08662,245.6693 h -42"
+     sodipodi:insensitive="true"
+     inkscape:label="dinhelpline"
+     style="display:none;stroke:#000000;stroke-width:2.07874;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-7-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="872.41995"
+     y="386.29923"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px"
+     transform="rotate(-90,872.41995,386.29923)"><tspan
+       sodipodi:role="line"
+       id="tspan17"> </tspan></text>
+  <path
+     id="infoline-on-end-7-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 907.08662,566.92916 865.67241,525.51495"
+     sodipodi:insensitive="true"
+     inkscape:label="dinhelpline"
+     style="stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-7-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="m 867.08662,262.29922 v 124.00001 m 0,0 v 124.00001"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-8-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 907.08662,566.92916 865.67241,525.51495"
+     sodipodi:insensitive="true"
+     inkscape:label="dinhelpline"
+     style="stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-8-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="566.92914"
+     y="532.26249"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px"><tspan
+       sodipodi:role="line"
+       id="tspan18"> </tspan></text>
+  <path
+     id="infoline-on-end-8-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="m 226.77166,566.92916 41.41421,-41.41421"
+     sodipodi:insensitive="true"
+     inkscape:label="dinhelpline"
+     style="stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-8-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="M 850.4567,526.92916 H 566.92914 m 0,0 H 283.40158"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-9-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-9-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="0"
+     y="0"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"><tspan
+       sodipodi:role="line"
+       id="tspan19"
+       style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"> </tspan></text>
+  <path
+     id="infoline-on-end-9-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-9-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-10-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-10-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="0"
+     y="0"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"><tspan
+       sodipodi:role="line"
+       id="tspan20"
+       style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"> </tspan></text>
+  <path
+     id="infoline-on-end-10-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-10-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-11-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-11-path-effect10"
+     class="path1 path-effect10 measure-label"
+     sodipodi:insensitive="true"
+     x="0"
+     y="0"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"><tspan
+       sodipodi:role="line"
+       id="tspan21"
+       style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px;display:none"> </tspan></text>
+  <path
+     id="infoline-on-end-11-path-effect10"
+     class="path1 path-effect10 measure-helper-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-11-path-effect10"
+     class="path1 path-effect10 measure-DIM-line measure-line"
+     d="M 0,0 V 0"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="display:none;marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-on-start-0-path-effect21"
+     class="path21 path-effect21 measure-helper-line measure-line"
+     d="m 359.05512,245.59055 v 42"
+     sodipodi:insensitive="true"
+     inkscape:label="dinhelpline"
+     style="stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <text
+     xml:space="preserve"
+     id="text-on-0-path-effect21"
+     class="path21 path-effect21 measure-label"
+     sodipodi:insensitive="true"
+     x="566.92914"
+     y="290.92389"
+     style="font-family:Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#000000;fill-opacity:1;font-size:13.3333px"><tspan
+       sodipodi:role="line"
+       id="tspan22"> </tspan></text>
+  <path
+     id="infoline-on-end-0-path-effect21"
+     class="path21 path-effect21 measure-helper-line measure-line"
+     d="m 774.80316,245.59055 v 42"
+     sodipodi:insensitive="true"
+     inkscape:label="dinhelpline"
+     style="stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+  <path
+     id="infoline-0-path-effect21"
+     class="path21 path-effect21 measure-DIM-line measure-line"
+     d="m 375.68504,285.59055 h 191.2441 m 0,0 h 191.2441"
+     sodipodi:insensitive="true"
+     inkscape:label="dinline"
+     style="marker-start:url(#ArrowDIN-start);marker-end:url(#ArrowDIN-end);stroke-width:2.07874;stroke:#000000;stroke-opacity:1" />
+</svg>

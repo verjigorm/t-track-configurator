@@ -123,6 +123,54 @@ async function loadScadDefaults() {
     });
 }
 
+// --- Diagram highlight ---
+const DIAGRAM_BASE = '#8090a8';
+const DIAGRAM_HIGHLIGHT = '#e94560';
+
+const DIAGRAM_MAP = {
+    slot_width: { line: 'infoline-0-path-effect21', label: 'text23' },
+    lip_width:  { line: 'infoline-8-path-effect10', label: 'text23-8' },
+    slot_depth: { line: 'infoline-5-path-effect10', label: 'text23-8-1' },
+    lip_depth:  { line: 'infoline-7-path-effect10', label: 'text23-8-2' },
+};
+
+function applyDiagramTheme() {
+    // T-track body: light fill so the shape reads on dark background
+    const track = document.getElementById('path1');
+    if (track) { track.style.fill = '#c8d4e0'; track.style.stroke = '#c8d4e0'; }
+    // All dimension/helper lines and arrows
+    document.querySelectorAll('#track-diagram .measure-line').forEach(el => {
+        el.style.stroke = DIAGRAM_BASE;
+    });
+    // All text labels
+    document.querySelectorAll('#track-diagram text').forEach(el => {
+        el.style.fill = DIAGRAM_BASE;
+        el.style.stroke = 'none';
+    });
+}
+
+function highlightDiagram({ line, label }, active) {
+    const color = active ? DIAGRAM_HIGHLIGHT : DIAGRAM_BASE;
+    const lineEl = document.getElementById(line);
+    const labelEl = document.getElementById(label);
+    if (lineEl) lineEl.style.stroke = color;
+    if (labelEl) { labelEl.style.fill = color; }
+}
+
+async function loadDiagram() {
+    const container = document.getElementById('track-diagram');
+    const text = await fetch('./t_track_diagram.svg').then(r => r.text());
+    container.innerHTML = text;
+    applyDiagramTheme();
+    paramInputs.forEach(input => {
+        const map = DIAGRAM_MAP[input.dataset.param];
+        if (!map) return;
+        input.addEventListener('focus', () => highlightDiagram(map, true));
+        input.addEventListener('blur',  () => highlightDiagram(map, false));
+    });
+}
+
 // --- Init ---
 initViewer(viewerContainer);
 loadScadDefaults().then(() => requestGeneration());
+loadDiagram();

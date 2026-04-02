@@ -19,7 +19,7 @@ body {
 
 /* --- Left Panel: Controls --- */
 .controls {
-    width: 320px;
+    width: 520px;
     min-width: 320px;
     padding: 24px;
     background: #16213e;
@@ -63,6 +63,32 @@ body {
 .unit-toggle button.active {
     background: #e94560;
     color: #fff;
+}
+
+/* Track section: diagram + params side by side */
+.track-section {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.track-section .param-group {
+    flex: 0 0 auto;
+}
+
+/* Diagram */
+.diagram-container {
+    flex: 1 1 0;
+    min-width: 0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.diagram-container svg {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* Parameter groups */
@@ -184,6 +210,10 @@ body {
         max-height: 50vh;
         border-right: none;
         border-bottom: 1px solid #0f3460;
+    }
+
+    .track-section {
+        flex-direction: column;
     }
 
     .viewer {
