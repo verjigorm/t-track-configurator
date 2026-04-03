@@ -134,4 +134,4 @@ Analyse the functionality to implement and ask me questions if you are unsure of
  - [x] there should be the option to switch between the t-track and the dovetail view
  - [x] use the dovetail diagram svg in a similar way as with the t-track
  - [x] the corners parallel to the track direction should be chamfered
-- the bolt head should be arranged such that the two of the faces are parallel to the sides of the slot, to save a bit of width
+- [x] the bolt head should be arranged such that the two of the faces are parallel to the sides of the slot, to save a bit of width

@@ -68,8 +68,8 @@ module hex_pocket() {
     // Hex bolt head recess cut into the bottom of the slot section (Z=0 face).
     // Rotated 30° so flat faces are parallel to the slot walls (±X), minimising width.
     translate([0, 0, -0.01])
-    rotate([0, 0, 30])
-        cylinder(h = head_height + 0.01, r = head_radius, $fn = 6);
+        rotate([0, 0, 30])
+            cylinder(h = head_height + 0.01, r = head_radius, $fn = 6);
 }
 
 module shaft_hole() {
@@ -81,8 +81,8 @@ module shaft_hole() {
 module bridge_step() {
     // Thin rectangular slot at the ceiling of the hex pocket (Z = head_height).
     // Width matches the shaft hole so the printer can bridge without supports.
-    translate([-shaft_diameter/2, -head_width/2, head_height])
-        cube([shaft_diameter, head_width, layer_height]);
+    translate([-head_width/2, -shaft_diameter/2, head_height])
+        cube([head_width, shaft_diameter, layer_height]);
 }
 
 module bridge_step_square() {

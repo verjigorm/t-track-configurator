@@ -75,8 +75,8 @@ module shaft_hole() {
 module bridge_step() {
     // Thin rectangular slot at the ceiling of the hex pocket (z = head_height).
     // Width matches the shaft hole so the printer can bridge without supports.
-    translate([-shaft_diameter/2, -head_width/2, head_height])
-        cube([shaft_diameter, head_width, layer_height]);
+    translate([-head_width/2, -shaft_diameter/2, head_height])
+        cube([head_width, shaft_diameter, layer_height]);
 }
 
 module bridge_step_square() {
