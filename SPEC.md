@@ -125,3 +125,13 @@ Analyse the functionality to implement and ask me questions if you are unsure of
  - [x] the current sizes will be listed as M8
 - [x] Use goatcounter to count page visits, renderings and stl downloads
 - [x] a functionality to share presets (preferably URL with params)
+- [x] an additional configurator for creating inserts for dovetail slots
+ - [x] the slots are 1/2" wide at the bottom, 3/8" tall, and the walls are at 14 degrees from vertical
+ - [x] the inserts should be slightly undersized in height and width, but their top should be a bit wider than 3/8", so they don't poke out of the top; their walls should be still 14 degrees off of vertical
+ - [x] the inserts should accept bolts similar to the t-track inserts
+ - [x] the presets for the bolts should be M6 or smaller
+ - [x] the default length should of the insert should be 40mm
+ - [x] there should be the option to switch between the t-track and the dovetail view
+ - [x] use the dovetail diagram svg in a similar way as with the t-track
+ - [x] the corners parallel to the track direction should be chamfered
+- the bolt head should be arranged such that the two of the faces are parallel to the sides of the slot, to save a bit of width

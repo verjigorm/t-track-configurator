@@ -14,7 +14,7 @@ async function ensureFactory() {
 }
 
 self.onmessage = async (event) => {
-    const { type, params } = event.data;
+    const { type, params, scadFile } = event.data;
 
     if (type === 'generate') {
         try {
@@ -22,7 +22,8 @@ self.onmessage = async (event) => {
 
             self.postMessage({ type: 'status', message: 'Generating model...' });
 
-            const scadText = await fetch('./insert.scad').then(r => r.text());
+            const file = scadFile || 'insert.scad';
+            const scadText = await fetch(`./${file}`).then(r => r.text());
 
             // Fresh instance per render — callMain can only be called once per instance
             const inst = await factory();

@@ -41,6 +41,30 @@ body {
     font-weight: 300;
 }
 
+/* Mode toggle */
+.mode-toggle {
+    display: flex;
+    background: #0f3460;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.mode-toggle button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    color: #a0a0a0;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.mode-toggle button.active {
+    background: #e94560;
+    color: #fff;
+}
+
 /* Unit toggle */
 .unit-toggle {
     display: flex;
@@ -130,6 +154,12 @@ body {
     border-color: #e94560;
 }
 
+.param-row input.derived-input {
+    color: #606880;
+    border-color: #1a2a4a;
+    cursor: default;
+}
+
 .param-row select {
     width: 90px;
     padding: 6px 4px;
@@ -146,14 +176,21 @@ body {
     border-color: #e94560;
 }
 
+/* Action row: Render + Share + Download side by side */
+.action-row {
+    display: flex;
+    gap: 8px;
+}
+
 /* Render button */
 .render-btn {
-    padding: 12px;
+    flex: 1;
+    padding: 12px 8px;
     border: none;
     border-radius: 6px;
     background: #0f3460;
     color: #fff;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: background 0.2s;
 }
@@ -164,7 +201,8 @@ body {
 
 /* Share button */
 .share-btn {
-    padding: 10px;
+    flex: 0 0 auto;
+    padding: 12px 10px;
     border: 1px solid #0f3460;
     border-radius: 6px;
     background: transparent;
@@ -186,13 +224,13 @@ body {
 
 /* Download button */
 .download-btn {
-    margin-top: auto;
-    padding: 12px;
+    flex: 1;
+    padding: 12px 8px;
     border: none;
     border-radius: 6px;
     background: #e94560;
     color: #fff;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: background 0.2s;
 }

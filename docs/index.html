@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T-Track Insert Configurator</title>
+    <title>Insert Configurator</title>
     <link rel="stylesheet" href="style.css">
     <script type="importmap">
     {
@@ -18,7 +18,13 @@
     <div class="app">
         <!-- Left Panel: Controls -->
         <div class="controls">
-            <h1>T-Track <span>Insert Configurator</span></h1>
+            <h1><span id="mode-title">T-Track</span> <span>Insert Configurator</span></h1>
+
+            <!-- Mode Toggle -->
+            <div class="mode-toggle">
+                <button id="mode-ttrack" class="active">T-Track</button>
+                <button id="mode-dovetail">Dovetail</button>
+            </div>
 
             <!-- Unit Toggle -->
             <div class="unit-toggle">
@@ -27,7 +33,7 @@
             </div>
 
             <!-- T-Track Profile + Diagram side by side -->
-            <div class="track-section">
+            <div class="track-section" id="ttrack-section">
                 <div id="track-diagram" class="diagram-container"></div>
                 <div class="param-group">
                 <h2>T-Track Profile</h2>
@@ -41,22 +47,46 @@
                 </div>
                 <div class="param-row">
                     <label for="slot_width">Slot Width</label>
-                    <input type="number" id="slot_width" data-param="slot_width" step="0.1">
+                    <input type="number" id="slot_width" data-param="slot_width" data-mode="ttrack" step="0.1">
                 </div>
                 <div class="param-row">
                     <label for="lip_width">Lip Width</label>
-                    <input type="number" id="lip_width" data-param="lip_width" step="0.1">
+                    <input type="number" id="lip_width" data-param="lip_width" data-mode="ttrack" step="0.1">
                 </div>
                 <div class="param-row">
                     <label for="slot_depth">Slot Depth</label>
-                    <input type="number" id="slot_depth" data-param="slot_depth" step="0.1">
+                    <input type="number" id="slot_depth" data-param="slot_depth" data-mode="ttrack" step="0.1">
                 </div>
                 <div class="param-row">
                     <label for="lip_depth">Lip Depth</label>
-                    <input type="number" id="lip_depth" data-param="lip_depth" step="0.1">
+                    <input type="number" id="lip_depth" data-param="lip_depth" data-mode="ttrack" step="0.1">
                 </div>
             </div>
-            </div><!-- /.track-section -->
+            </div><!-- /.ttrack-section -->
+
+            <!-- Dovetail Profile + Diagram side by side -->
+            <div class="track-section" id="dovetail-section" style="display:none">
+                <div id="dovetail-diagram" class="diagram-container"></div>
+                <div class="param-group">
+                <h2>Dovetail Profile</h2>
+                <div class="param-row">
+                    <label for="dv_bottom_width">Bottom Width (B)</label>
+                    <input type="number" id="dv_bottom_width" data-param="dv_bottom_width" data-mode="dovetail" step="0.1" value="12.6" data-default-mm="12.6">
+                </div>
+                <div class="param-row">
+                    <label for="dv_height">Height (H)</label>
+                    <input type="number" id="dv_height" data-param="dv_height" data-mode="dovetail" step="0.1" value="9.0" data-default-mm="9.0">
+                </div>
+                <div class="param-row">
+                    <label for="wall_angle">Wall Angle (°)</label>
+                    <input type="number" id="wall_angle" data-param="wall_angle" data-mode="dovetail" data-no-unit-convert step="0.5" value="14" data-default-mm="14">
+                </div>
+                <div class="param-row">
+                    <label for="dv_top_width_display">Top Width (T)</label>
+                    <input type="number" id="dv_top_width_display" class="derived-input" readonly tabindex="-1" step="0.1" value="8.11">
+                </div>
+            </div>
+            </div><!-- /.dovetail-section -->
 
             <!-- Bolt Dimensions + Diagram side by side -->
             <div class="track-section">
@@ -103,14 +133,12 @@
             <!-- Status -->
             <div class="status" id="status">Ready</div>
 
-            <!-- Render -->
-            <button class="render-btn" id="render-btn">Render</button>
-
-            <!-- Share -->
-            <button class="share-btn" id="share-btn">Copy Share Link</button>
-
-            <!-- Download -->
-            <button class="download-btn" id="download-btn" disabled>Download STL</button>
+            <!-- Actions row -->
+            <div class="action-row">
+                <button class="render-btn" id="render-btn">Render</button>
+                <button class="share-btn" id="share-btn">Share</button>
+                <button class="download-btn" id="download-btn" disabled>Download STL</button>
+            </div>
         </div>
 
         <!-- Right Panel: 3D Viewer -->

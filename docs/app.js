@@ -1,5 +1,8 @@
 import { init as initViewer, updateModel } from './viewer.js';
-import { TRACK_PRESETS, BOLT_PRESETS, TRACK_PARAM_KEYS, BOLT_PARAM_KEYS } from './presets.js';
+import {
+    TRACK_PRESETS, BOLT_PRESETS, DOVETAIL_DEFAULTS,
+    TRACK_PARAM_KEYS, BOLT_PARAM_KEYS,
+} from './presets.js';
 
 // --- Analytics ---
 function trackEvent(path, title) {
@@ -10,18 +13,26 @@ function trackEvent(path, title) {
 
 // --- State ---
 let currentUnit = 'mm'; // 'mm' or 'in'
-let currentStl = null;
+let currentMode = 'ttrack'; // 'ttrack' or 'dovetail'
+let currentStl  = null;
+let ttrackScadDefaults = {};
 const MM_PER_INCH = 25.4;
 
 // --- DOM ---
-const paramInputs = document.querySelectorAll('input[data-param]');
-const unitMmBtn = document.getElementById('unit-mm');
-const unitInBtn = document.getElementById('unit-in');
-const renderBtn = document.getElementById('render-btn');
-const downloadBtn = document.getElementById('download-btn');
-const shareBtn = document.getElementById('share-btn');
-const statusEl = document.getElementById('status');
-const viewerContainer = document.getElementById('viewer-container');
+const paramInputs    = document.querySelectorAll('input[data-param]');
+const unitMmBtn      = document.getElementById('unit-mm');
+const unitInBtn      = document.getElementById('unit-in');
+const modeTtrackBtn  = document.getElementById('mode-ttrack');
+const modeDovetailBtn= document.getElementById('mode-dovetail');
+const renderBtn      = document.getElementById('render-btn');
+const downloadBtn    = document.getElementById('download-btn');
+const shareBtn       = document.getElementById('share-btn');
+const statusEl       = document.getElementById('status');
+const viewerContainer= document.getElementById('viewer-container');
+const ttracksection  = document.getElementById('ttrack-section');
+const dovetailSection= document.getElementById('dovetail-section');
+const modeTitleEl    = document.getElementById('mode-title');
+const dvTopDisplay   = document.getElementById('dv_top_width_display');
 
 // --- Worker ---
 const worker = new Worker('./openscad-worker.js', { type: 'module' });
@@ -53,15 +64,37 @@ function setStatus(msg, className) {
     statusEl.className = 'status' + (className ? ' ' + className : '');
 }
 
+// Recompute and display the derived top width from bottom width, height and angle
+function updateDerivedTopWidth() {
+    const bwInput = document.getElementById('dv_bottom_width');
+    const hInput  = document.getElementById('dv_height');
+    const aInput  = document.getElementById('wall_angle');
+    if (!bwInput || !hInput || !aInput || !dvTopDisplay) return;
+
+    let bw = parseFloat(bwInput.value);
+    let h  = parseFloat(hInput.value);
+    const a = parseFloat(aInput.value); // degrees — never converted
+
+    // Input values are already in current display unit (except angle)
+    if (currentUnit === 'in') { bw *= MM_PER_INCH; h *= MM_PER_INCH; }
+
+    if (isNaN(bw) || isNaN(h) || isNaN(a)) return;
+    const twMm = bw - 2 * h * Math.tan(a * Math.PI / 180);
+    dvTopDisplay.value = currentUnit === 'in'
+        ? parseFloat((twMm / MM_PER_INCH).toFixed(3))
+        : parseFloat(twMm.toFixed(2));
+}
+
+// Returns only params relevant to the current mode, in mm
 function getParamsMm() {
     const params = {};
     paramInputs.forEach(input => {
+        const inputMode = input.dataset.mode;
+        if (inputMode && inputMode !== currentMode) return;
         let val = parseFloat(input.value);
         if (isNaN(val)) val = parseFloat(input.dataset.defaultMm);
-        // Convert to mm if currently displaying inches
-        if (currentUnit === 'in') {
-            val = val * MM_PER_INCH;
-        }
+        // Angle params are in degrees — never multiplied by MM_PER_INCH
+        if (currentUnit === 'in' && !input.dataset.noUnitConvert) val *= MM_PER_INCH;
         params[input.dataset.param] = val;
     });
     return params;
@@ -69,43 +102,51 @@ function getParamsMm() {
 
 function requestGeneration() {
     downloadBtn.disabled = true;
+    currentStl = null;
     setStatus('Generating...', 'loading');
-    worker.postMessage({ type: 'generate', params: getParamsMm() });
+    const scadFile = currentMode === 'dovetail' ? 'dovetail_insert.scad' : 'insert.scad';
+    worker.postMessage({ type: 'generate', params: getParamsMm(), scadFile });
 }
 
-// Unit switching
+// Unit switching — converts all displayed values (skips angle inputs)
 function setUnit(unit) {
     if (unit === currentUnit) return;
-
-    // Convert displayed values
     paramInputs.forEach(input => {
+        if (input.dataset.noUnitConvert) return;
         let val = parseFloat(input.value);
         if (isNaN(val)) return;
-
-        if (unit === 'in') {
-            // mm → inches
-            val = val / MM_PER_INCH;
-        } else {
-            // inches → mm
-            val = val * MM_PER_INCH;
-        }
+        val = unit === 'in' ? val / MM_PER_INCH : val * MM_PER_INCH;
         input.value = parseFloat(val.toFixed(3));
-        input.step = unit === 'in' ? '0.01' : '0.1';
+        input.step  = unit === 'in' ? '0.01' : '0.1';
     });
-
     currentUnit = unit;
     unitMmBtn.classList.toggle('active', unit === 'mm');
     unitInBtn.classList.toggle('active', unit === 'in');
+    updateDerivedTopWidth();
+}
+
+// Apply a values object (mm / degrees) to matching inputs
+function applyDefaults(defaults) {
+    Object.entries(defaults).forEach(([key, mmVal]) => {
+        const input = document.querySelector(`input[data-param="${key}"]`);
+        if (!input) return;
+        const isAngle = !!input.dataset.noUnitConvert;
+        const displayVal = (!isAngle && currentUnit === 'in')
+            ? parseFloat((mmVal / MM_PER_INCH).toFixed(3))
+            : mmVal;
+        input.value = displayVal;
+        input.dataset.defaultMm = mmVal;
+    });
 }
 
 // Download
 function downloadStl() {
     if (!currentStl) return;
     const blob = new Blob([currentStl], { type: 'application/octet-stream' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 't-track-insert.stl';
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = currentMode === 'dovetail' ? 'dovetail-insert.stl' : 't-track-insert.stl';
     a.click();
     URL.revokeObjectURL(url);
     trackEvent('stl-download', 'STL Download');
@@ -116,7 +157,8 @@ function buildShareUrl() {
     const params = getParamsMm();
     const sp = new URLSearchParams();
     Object.entries(params).forEach(([k, v]) => sp.set(k, v));
-    sp.set('u', currentUnit);
+    sp.set('u',    currentUnit);
+    sp.set('mode', currentMode);
     if (trackPresetEl.value) sp.set('tp', trackPresetEl.value);
     if (boltPresetEl.value)  sp.set('bp', boltPresetEl.value);
     return `${location.origin}${location.pathname}?${sp.toString()}`;
@@ -128,7 +170,7 @@ function copyShareUrl() {
         shareBtn.textContent = 'Copied!';
         shareBtn.classList.add('copied');
         setTimeout(() => {
-            shareBtn.textContent = 'Copy Share Link';
+            shareBtn.textContent = 'Share';
             shareBtn.classList.remove('copied');
         }, 2000);
     });
@@ -139,12 +181,21 @@ function applyUrlParams() {
     const sp = new URLSearchParams(location.search);
     if (sp.size === 0) return false;
 
+    const urlMode = sp.get('mode');
+    if (urlMode === 'dovetail' || urlMode === 'ttrack') {
+        applyMode(urlMode, false);
+    }
+
     paramInputs.forEach(input => {
         const mmVal = sp.get(input.dataset.param);
         if (mmVal === null) return;
         const v = parseFloat(mmVal);
         if (isNaN(v)) return;
-        input.value = v;
+        // Values are stored in mm (or degrees for angle); convert to display unit if needed
+        const isAngle = !!input.dataset.noUnitConvert;
+        input.value = (!isAngle && sp.get('u') === 'in')
+            ? parseFloat((v / MM_PER_INCH).toFixed(3))
+            : v;
         input.dataset.defaultMm = v;
     });
 
@@ -155,78 +206,123 @@ function applyUrlParams() {
 
     const unit = sp.get('u');
     if (unit === 'in') {
-        // Values were stored in mm; convert display to inches
+        // Step sizes for non-angle inputs
         paramInputs.forEach(input => {
-            const val = parseFloat(input.value);
-            if (!isNaN(val)) {
-                input.value = parseFloat((val / MM_PER_INCH).toFixed(3));
-                input.step = '0.01';
-            }
+            if (!input.dataset.noUnitConvert) input.step = '0.01';
         });
         currentUnit = 'in';
         unitMmBtn.classList.remove('active');
         unitInBtn.classList.add('active');
     }
 
+    updateDerivedTopWidth();
     return true;
 }
 
-// --- Event Listeners ---
-renderBtn.addEventListener('click', requestGeneration);
-unitMmBtn.addEventListener('click', () => setUnit('mm'));
-unitInBtn.addEventListener('click', () => setUnit('in'));
-downloadBtn.addEventListener('click', downloadStl);
-shareBtn.addEventListener('click', copyShareUrl);
+// --- Mode switching ---
 
-async function loadScadDefaults() {
-    const text = await fetch('./insert.scad').then(r => r.text());
-    const re = /^(\w+)\s*=\s*([\d.]+)\s*;/gm;
-    const defaults = {};
-    let m;
-    while ((m = re.exec(text)) !== null) {
-        defaults[m[1]] = parseFloat(m[2]);
+const TTRACK_BOLT_OPTIONS = [
+    { value: 'm8',  label: 'M8'  },
+    { value: 'm6',  label: 'M6'  },
+    { value: 'm10', label: 'M10' },
+];
+const DOVETAIL_BOLT_OPTIONS = [
+    { value: 'm5', label: 'M5' },
+    { value: 'm4', label: 'M4' },
+    { value: 'm6', label: 'M6' },
+];
+
+function updateBoltPresetOptions(mode) {
+    const options = mode === 'dovetail' ? DOVETAIL_BOLT_OPTIONS : TTRACK_BOLT_OPTIONS;
+    boltPresetEl.innerHTML =
+        options.map(o => `<option value="${o.value}">${o.label}</option>`).join('') +
+        '<option value="custom">Custom</option>';
+}
+
+function applyMode(mode, render = true) {
+    currentMode = mode;
+
+    ttracksection.style.display   = mode === 'ttrack'   ? '' : 'none';
+    dovetailSection.style.display  = mode === 'dovetail' ? '' : 'none';
+    modeTtrackBtn.classList.toggle('active',   mode === 'ttrack');
+    modeDovetailBtn.classList.toggle('active', mode === 'dovetail');
+    modeTitleEl.textContent = mode === 'dovetail' ? 'Dovetail' : 'T-Track';
+
+    updateBoltPresetOptions(mode);
+
+    if (mode === 'dovetail') {
+        applyDefaults(DOVETAIL_DEFAULTS);
+        boltPresetEl.value = 'm5';
+        updateDerivedTopWidth();
+    } else {
+        applyDefaults(ttrackScadDefaults);
+        trackPresetEl.value = 'wide-metric';
+        applyPreset(TRACK_PRESETS['wide-metric']);
+        boltPresetEl.value  = 'm8';
+        applyPreset(BOLT_PRESETS['m8']);
     }
-    paramInputs.forEach(input => {
-        const key = input.dataset.param;
-        if (key in defaults) {
-            input.value = defaults[key];
-            input.dataset.defaultMm = defaults[key];
-        }
-    });
+    syncSelectTooltip(boltPresetEl);
+    if (render) requestGeneration();
 }
 
 // --- Diagram highlight ---
-const DIAGRAM_BASE = '#8090a8';
+const DIAGRAM_BASE      = '#8090a8';
 const DIAGRAM_HIGHLIGHT = '#e94560';
 
 const DIAGRAM_MAP = {
-    slot_width: { line: 'infoline-0-path-effect21', label: 'text23' },
-    lip_width:  { line: 'infoline-8-path-effect10', label: 'text23-8' },
+    slot_width: { line: 'infoline-0-path-effect21', label: 'text23'     },
+    lip_width:  { line: 'infoline-8-path-effect10', label: 'text23-8'   },
     slot_depth: { line: 'infoline-5-path-effect10', label: 'text23-8-1' },
     lip_depth:  { line: 'infoline-7-path-effect10', label: 'text23-8-2' },
 };
 
-function applyDiagramTheme() {
-    // T-track body: light fill so the shape reads on dark background
-    const track = document.getElementById('path1');
-    if (track) { track.style.fill = '#c8d4e0'; track.style.stroke = '#c8d4e0'; }
-    // All dimension/helper lines and arrows
-    document.querySelectorAll('#track-diagram .measure-line').forEach(el => {
-        el.style.stroke = DIAGRAM_BASE;
-    });
-    // All text labels
-    document.querySelectorAll('#track-diagram text').forEach(el => {
-        el.style.fill = DIAGRAM_BASE;
-        el.style.stroke = 'none';
-    });
+const BOLT_DIAGRAM_MAP = {
+    head_width:     { line: 'infoline-0-path-effect9', label: 'text18' },
+    head_height:    { line: 'infoline-7-path-effect9', label: 'text17' },
+    shaft_diameter: { line: 'infoline-4-path-effect9', label: 'text19' },
+};
+
+const DOVETAIL_DIAGRAM_MAP = {
+    dv_bottom_width: { line: 'infoline-0-path-effect1', label: 'text4' },
+    dv_height:       { line: 'infoline-0-path-effect6', label: 'text7' },
+};
+// The derived top-width display highlights T in the diagram on focus
+const DOVETAIL_TOP_MAP = { line: 'infoline-2-path-effect1', label: 'text5' };
+
+function highlightIn(container, { line, label }, active) {
+    const color  = active ? DIAGRAM_HIGHLIGHT : DIAGRAM_BASE;
+    const lineEl = container.querySelector(`[id="${line}"]`);
+    const labEl  = container.querySelector(`[id="${label}"]`);
+    if (lineEl) lineEl.style.stroke = color;
+    if (labEl)  labEl.style.fill    = color;
 }
 
-function highlightDiagram({ line, label }, active) {
-    const color = active ? DIAGRAM_HIGHLIGHT : DIAGRAM_BASE;
-    const lineEl = document.getElementById(line);
-    const labelEl = document.getElementById(label);
-    if (lineEl) lineEl.style.stroke = color;
-    if (labelEl) { labelEl.style.fill = color; }
+function applyDiagramTheme() {
+    const container = document.getElementById('track-diagram');
+    const track = container.querySelector('#path1');
+    if (track) { track.style.fill = '#c8d4e0'; track.style.stroke = '#c8d4e0'; }
+    container.querySelectorAll('.measure-line').forEach(el => { el.style.stroke = DIAGRAM_BASE; });
+    container.querySelectorAll('text').forEach(el => { el.style.fill = DIAGRAM_BASE; el.style.stroke = 'none'; });
+}
+
+function applyBoltDiagramTheme() {
+    const container = document.getElementById('bolt-diagram');
+    const bolt = container.querySelector('#path1');
+    if (bolt) { bolt.style.fill = '#c8d4e0'; bolt.style.stroke = '#c8d4e0'; }
+    ['path2','path3','path4','path5','path6','path7','path8','path9'].forEach(id => {
+        const el = container.querySelector(`#${id}`);
+        if (el) el.style.stroke = '#16213e';
+    });
+    container.querySelectorAll('.measure-line').forEach(el => { el.style.stroke = DIAGRAM_BASE; });
+    container.querySelectorAll('text').forEach(el => { el.style.fill = DIAGRAM_BASE; el.style.stroke = 'none'; });
+}
+
+function applyDovetailDiagramTheme() {
+    const container = document.getElementById('dovetail-diagram');
+    const shape = container.querySelector('#path1');
+    if (shape) { shape.style.fill = '#c8d4e0'; shape.style.stroke = '#c8d4e0'; }
+    container.querySelectorAll('.measure-line').forEach(el => { el.style.stroke = DIAGRAM_BASE; });
+    container.querySelectorAll('text').forEach(el => { el.style.fill = DIAGRAM_BASE; el.style.stroke = 'none'; });
 }
 
 async function loadDiagram() {
@@ -237,31 +333,8 @@ async function loadDiagram() {
     paramInputs.forEach(input => {
         const map = DIAGRAM_MAP[input.dataset.param];
         if (!map) return;
-        input.addEventListener('focus', () => highlightDiagram(map, true));
-        input.addEventListener('blur',  () => highlightDiagram(map, false));
-    });
-}
-
-const BOLT_DIAGRAM_MAP = {
-    head_width:     { line: 'infoline-0-path-effect9', label: 'text18' },
-    head_height:    { line: 'infoline-7-path-effect9', label: 'text17' },
-    shaft_diameter: { line: 'infoline-4-path-effect9', label: 'text19' },
-};
-
-function applyBoltDiagramTheme() {
-    const bolt = document.querySelector('#bolt-diagram #path1');
-    if (bolt) { bolt.style.fill = '#c8d4e0'; bolt.style.stroke = '#c8d4e0'; }
-    // Internal drawing lines (threads, dividers) — blend into panel background
-    ['path2','path3','path4','path5','path6','path7','path8','path9'].forEach(id => {
-        const el = document.querySelector(`#bolt-diagram #${id}`);
-        if (el) el.style.stroke = '#16213e';
-    });
-    document.querySelectorAll('#bolt-diagram .measure-line').forEach(el => {
-        el.style.stroke = DIAGRAM_BASE;
-    });
-    document.querySelectorAll('#bolt-diagram text').forEach(el => {
-        el.style.fill = DIAGRAM_BASE;
-        el.style.stroke = 'none';
+        input.addEventListener('focus', () => highlightIn(container, map, true));
+        input.addEventListener('blur',  () => highlightIn(container, map, false));
     });
 }
 
@@ -273,19 +346,44 @@ async function loadBoltDiagram() {
     paramInputs.forEach(input => {
         const map = BOLT_DIAGRAM_MAP[input.dataset.param];
         if (!map) return;
-        input.addEventListener('focus', () => highlightDiagram(map, true));
-        input.addEventListener('blur',  () => highlightDiagram(map, false));
+        input.addEventListener('focus', () => highlightIn(container, map, true));
+        input.addEventListener('blur',  () => highlightIn(container, map, false));
+    });
+}
+
+async function loadDovetailDiagram() {
+    const container = document.getElementById('dovetail-diagram');
+    const text = await fetch('./dovetail_diagram.svg').then(r => r.text());
+    container.innerHTML = text;
+    applyDovetailDiagramTheme();
+    // Wire editable inputs
+    paramInputs.forEach(input => {
+        const map = DOVETAIL_DIAGRAM_MAP[input.dataset.param];
+        if (!map) return;
+        input.addEventListener('focus', () => highlightIn(container, map, true));
+        input.addEventListener('blur',  () => highlightIn(container, map, false));
+    });
+    // Wire readonly derived display → highlights T dimension
+    if (dvTopDisplay) {
+        dvTopDisplay.addEventListener('focus', () => highlightIn(container, DOVETAIL_TOP_MAP, true));
+        dvTopDisplay.addEventListener('blur',  () => highlightIn(container, DOVETAIL_TOP_MAP, false));
+    }
+    // Live-update derived top width whenever any dovetail input changes
+    ['dv_bottom_width', 'dv_height', 'wall_angle'].forEach(id => {
+        document.getElementById(id)?.addEventListener('input', updateDerivedTopWidth);
     });
 }
 
 // --- Presets ---
 
 function applyPreset(presetValues) {
-    // Always apply in mm; if user is in inches, convert
     Object.entries(presetValues).forEach(([key, mmVal]) => {
         const input = document.querySelector(`input[data-param="${key}"]`);
         if (!input) return;
-        const displayVal = currentUnit === 'in' ? parseFloat((mmVal / MM_PER_INCH).toFixed(3)) : mmVal;
+        const isAngle = !!input.dataset.noUnitConvert;
+        const displayVal = (!isAngle && currentUnit === 'in')
+            ? parseFloat((mmVal / MM_PER_INCH).toFixed(3))
+            : mmVal;
         input.value = displayVal;
         input.dataset.defaultMm = mmVal;
     });
@@ -293,7 +391,6 @@ function applyPreset(presetValues) {
 
 const trackPresetEl = document.getElementById('track-preset');
 const boltPresetEl  = document.getElementById('bolt-preset');
-
 
 function setCustomOnChange(paramKeys, selectEl) {
     paramKeys.forEach(key => {
@@ -320,21 +417,53 @@ boltPresetEl.addEventListener('change', () => {
     syncSelectTooltip(boltPresetEl);
 });
 
+// --- Event Listeners ---
+renderBtn.addEventListener('click', requestGeneration);
+unitMmBtn.addEventListener('click', () => setUnit('mm'));
+unitInBtn.addEventListener('click', () => setUnit('in'));
+downloadBtn.addEventListener('click', downloadStl);
+shareBtn.addEventListener('click', copyShareUrl);
+
+modeTtrackBtn.addEventListener('click', () => {
+    if (currentMode !== 'ttrack') applyMode('ttrack');
+});
+modeDovetailBtn.addEventListener('click', () => {
+    if (currentMode !== 'dovetail') applyMode('dovetail');
+});
+
 // --- Init ---
+
+async function loadScadDefaults() {
+    const text = await fetch('./insert.scad').then(r => r.text());
+    const re   = /^(\w+)\s*=\s*([\d.]+)\s*;/gm;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+        ttrackScadDefaults[m[1]] = parseFloat(m[2]);
+    }
+    paramInputs.forEach(input => {
+        const key = input.dataset.param;
+        if (key in ttrackScadDefaults) {
+            input.value = ttrackScadDefaults[key];
+            input.dataset.defaultMm = ttrackScadDefaults[key];
+        }
+    });
+}
+
 initViewer(viewerContainer);
+
 loadScadDefaults().then(() => {
     const fromUrl = applyUrlParams();
     if (!fromUrl) {
-        // Set preset dropdowns to match loaded defaults
         trackPresetEl.value = 'wide-metric';
-        boltPresetEl.value = 'm8';
+        boltPresetEl.value  = 'm8';
     }
     syncSelectTooltip(trackPresetEl);
     syncSelectTooltip(boltPresetEl);
-    // After presets are set, wire up "custom" detection
     setCustomOnChange(TRACK_PARAM_KEYS, trackPresetEl);
-    setCustomOnChange(BOLT_PARAM_KEYS, boltPresetEl);
+    setCustomOnChange(BOLT_PARAM_KEYS,  boltPresetEl);
     requestGeneration();
 });
+
 loadDiagram();
 loadBoltDiagram();
+loadDovetailDiagram();
