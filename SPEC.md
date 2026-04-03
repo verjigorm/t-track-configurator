@@ -113,3 +113,10 @@ A single `.scad` file that takes all parameters as variables and produces the in
 - **CNC/machining users** — users machining inserts from metal or plastic.
 
 Both workflows consume the same STL output.
+
+# New functionality
+- [x] selection of presets for t-track sizes
+ - [x] the current sizes will be listed as 'wide metric (30mm)'
+ - [x] tooltip shows the name of the preset 
+- [x] selection of presets for bolt sizes
+ - [x] the current sizes will be listed as M8

@@ -32,6 +32,14 @@
                 <div class="param-group">
                 <h2>T-Track Profile</h2>
                 <div class="param-row">
+                    <label for="track-preset">Preset</label>
+                    <select id="track-preset">
+                        <option value="wide-metric">Wide metric (30mm)</option>
+                        <option value="narrow-metric">Narrow metric (19mm)</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                <div class="param-row">
                     <label for="slot_width">Slot Width</label>
                     <input type="number" id="slot_width" data-param="slot_width" step="0.1">
                 </div>
@@ -55,6 +63,15 @@
                 <div id="bolt-diagram" class="diagram-container"></div>
                 <div class="param-group">
                 <h2>Bolt Dimensions</h2>
+                <div class="param-row">
+                    <label for="bolt-preset">Preset</label>
+                    <select id="bolt-preset">
+                        <option value="m8">M8</option>
+                        <option value="m6">M6</option>
+                        <option value="m10">M10</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
                 <div class="param-row">
                     <label for="head_width">Head Width (F2F)</label>
                     <input type="number" id="head_width" data-param="head_width" step="0.1">

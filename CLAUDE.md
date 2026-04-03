@@ -25,3 +25,4 @@ rendering. Hosted on GitHub Pages.
 - STL generation happens client-side only
 - Keep the UI simple — parameter inputs, preview, download button
 - Mobile-friendly layout
+- Mark functionalities as implemented after done

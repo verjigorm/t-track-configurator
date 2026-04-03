@@ -206,8 +206,73 @@ async function loadBoltDiagram() {
     });
 }
 
+// --- Presets ---
+
+const TRACK_PRESETS = {
+    'wide-metric':   { slot_width: 19, lip_width: 23, slot_depth: 6,  lip_depth: 3.5 },
+    'narrow-metric': { slot_width: 9.0, lip_width: 13.9, slot_depth: 6.5, lip_depth: 3.0 },
+};
+
+const BOLT_PRESETS = {
+    'm6': { head_width: 10,   head_height: 4,   shaft_diameter: 6.5 },
+    'm8': { head_width: 13,   head_height: 6,   shaft_diameter: 8.2 },
+    'm10':{ head_width: 16,   head_height: 6.4, shaft_diameter: 10.5 },
+};
+
+function applyPreset(presetValues) {
+    // Always apply in mm; if user is in inches, convert
+    Object.entries(presetValues).forEach(([key, mmVal]) => {
+        const input = document.querySelector(`input[data-param="${key}"]`);
+        if (!input) return;
+        const displayVal = currentUnit === 'in' ? parseFloat((mmVal / MM_PER_INCH).toFixed(3)) : mmVal;
+        input.value = displayVal;
+        input.dataset.defaultMm = mmVal;
+    });
+}
+
+const trackPresetEl = document.getElementById('track-preset');
+const boltPresetEl  = document.getElementById('bolt-preset');
+
+const TRACK_PARAM_KEYS = ['slot_width', 'lip_width', 'slot_depth', 'lip_depth'];
+const BOLT_PARAM_KEYS  = ['head_width', 'head_height', 'shaft_diameter'];
+
+function setCustomOnChange(paramKeys, selectEl) {
+    paramKeys.forEach(key => {
+        const input = document.querySelector(`input[data-param="${key}"]`);
+        if (!input) return;
+        input.addEventListener('input', () => selectEl.value = 'custom');
+    });
+}
+
+function syncSelectTooltip(selectEl) {
+    const selected = selectEl.options[selectEl.selectedIndex];
+    selectEl.title = selected ? selected.text : '';
+}
+
+trackPresetEl.addEventListener('change', () => {
+    const preset = TRACK_PRESETS[trackPresetEl.value];
+    if (preset) applyPreset(preset);
+    syncSelectTooltip(trackPresetEl);
+});
+
+boltPresetEl.addEventListener('change', () => {
+    const preset = BOLT_PRESETS[boltPresetEl.value];
+    if (preset) applyPreset(preset);
+    syncSelectTooltip(boltPresetEl);
+});
+
 // --- Init ---
 initViewer(viewerContainer);
-loadScadDefaults().then(() => requestGeneration());
+loadScadDefaults().then(() => {
+    // Set preset dropdowns to match loaded defaults
+    trackPresetEl.value = 'wide-metric';
+    boltPresetEl.value = 'm8';
+    syncSelectTooltip(trackPresetEl);
+    syncSelectTooltip(boltPresetEl);
+    // After presets are set, wire up "custom" detection
+    setCustomOnChange(TRACK_PARAM_KEYS, trackPresetEl);
+    setCustomOnChange(BOLT_PARAM_KEYS, boltPresetEl);
+    requestGeneration();
+});
 loadDiagram();
 loadBoltDiagram();
