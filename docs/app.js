@@ -210,7 +210,7 @@ async function loadBoltDiagram() {
 
 const TRACK_PRESETS = {
     'wide-metric':   { slot_width: 19, lip_width: 23, slot_depth: 6,  lip_depth: 3.5 },
-    'narrow-metric': { slot_width: 9.0, lip_width: 13.9, slot_depth: 6.5, lip_depth: 3.0 },
+    'narrow-metric': { slot_width: 9.0, lip_width: 13.9, slot_depth: 2, lip_depth: 3.0 },
 };
 
 const BOLT_PRESETS = {
