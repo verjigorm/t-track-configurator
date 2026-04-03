@@ -1,5 +1,12 @@
 import { init as initViewer, updateModel } from './viewer.js';
 
+// --- Analytics ---
+function trackEvent(path, title) {
+    if (window.goatcounter?.count) {
+        window.goatcounter.count({ path, title, event: true });
+    }
+}
+
 // --- State ---
 let currentUnit = 'mm'; // 'mm' or 'in'
 let currentStl = null;
@@ -27,6 +34,7 @@ worker.onmessage = (event) => {
         updateModel(stl);
         downloadBtn.disabled = false;
         setStatus('Ready');
+        trackEvent('render', 'Render');
     } else if (type === 'error') {
         setStatus(message, 'error');
     }
@@ -98,6 +106,7 @@ function downloadStl() {
     a.download = 't-track-insert.stl';
     a.click();
     URL.revokeObjectURL(url);
+    trackEvent('stl-download', 'STL Download');
 }
 
 // --- Event Listeners ---

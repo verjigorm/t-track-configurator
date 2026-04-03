@@ -120,3 +120,4 @@ Both workflows consume the same STL output.
  - [x] tooltip shows the name of the preset 
 - [x] selection of presets for bolt sizes
  - [x] the current sizes will be listed as M8
+- [x] Use goatcounter to count page visits, renderings and stl downloads
