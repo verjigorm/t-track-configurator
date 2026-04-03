@@ -13,5 +13,14 @@
       "Bash(curl -s --range 0-3000 \"https://cdn.jsdelivr.net/npm/openscad-wasm@0.0.4/openscad.js\")",
       "Bash(curl -s --range 13900000-13950000 https://cdn.jsdelivr.net/npm/openscad-wasm@0.0.4/openscad.js)"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Write|Edit|MultiEdit",
+      "hooks": [{
+        "type": "command",
+        "command": "npx prettier --write \"$CLAUDE_TOOL_INPUT_FILE_PATH\""
+      }]
+    }]
   }
 }

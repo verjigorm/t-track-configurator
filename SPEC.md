@@ -114,6 +114,9 @@ A single `.scad` file that takes all parameters as variables and produces the in
 
 Both workflows consume the same STL output.
 
+Always mark a functionality as done when ready.
+Analyse the functionality to implement and ask me questions if you are unsure of what solution to choose.
+
 # New functionality
 - [x] selection of presets for t-track sizes
  - [x] the current sizes will be listed as 'wide metric (30mm)'
@@ -121,3 +124,4 @@ Both workflows consume the same STL output.
 - [x] selection of presets for bolt sizes
  - [x] the current sizes will be listed as M8
 - [x] Use goatcounter to count page visits, renderings and stl downloads
+- [x] a functionality to share presets (preferably URL with params)

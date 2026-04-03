@@ -19,6 +19,7 @@ const unitMmBtn = document.getElementById('unit-mm');
 const unitInBtn = document.getElementById('unit-in');
 const renderBtn = document.getElementById('render-btn');
 const downloadBtn = document.getElementById('download-btn');
+const shareBtn = document.getElementById('share-btn');
 const statusEl = document.getElementById('status');
 const viewerContainer = document.getElementById('viewer-container');
 
@@ -110,11 +111,72 @@ function downloadStl() {
     trackEvent('stl-download', 'STL Download');
 }
 
+// Share URL
+function buildShareUrl() {
+    const params = getParamsMm();
+    const sp = new URLSearchParams();
+    Object.entries(params).forEach(([k, v]) => sp.set(k, v));
+    sp.set('u', currentUnit);
+    if (trackPresetEl.value) sp.set('tp', trackPresetEl.value);
+    if (boltPresetEl.value)  sp.set('bp', boltPresetEl.value);
+    return `${location.origin}${location.pathname}?${sp.toString()}`;
+}
+
+function copyShareUrl() {
+    const url = buildShareUrl();
+    navigator.clipboard.writeText(url).then(() => {
+        shareBtn.textContent = 'Copied!';
+        shareBtn.classList.add('copied');
+        setTimeout(() => {
+            shareBtn.textContent = 'Copy Share Link';
+            shareBtn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+// Apply URL params on load — returns true if any params were found
+function applyUrlParams() {
+    const sp = new URLSearchParams(location.search);
+    if (sp.size === 0) return false;
+
+    paramInputs.forEach(input => {
+        const mmVal = sp.get(input.dataset.param);
+        if (mmVal === null) return;
+        const v = parseFloat(mmVal);
+        if (isNaN(v)) return;
+        input.value = v;
+        input.dataset.defaultMm = v;
+    });
+
+    const tp = sp.get('tp');
+    if (tp) trackPresetEl.value = tp;
+    const bp = sp.get('bp');
+    if (bp) boltPresetEl.value = bp;
+
+    const unit = sp.get('u');
+    if (unit === 'in') {
+        // Values were stored in mm; convert display to inches
+        paramInputs.forEach(input => {
+            const val = parseFloat(input.value);
+            if (!isNaN(val)) {
+                input.value = parseFloat((val / MM_PER_INCH).toFixed(3));
+                input.step = '0.01';
+            }
+        });
+        currentUnit = 'in';
+        unitMmBtn.classList.remove('active');
+        unitInBtn.classList.add('active');
+    }
+
+    return true;
+}
+
 // --- Event Listeners ---
 renderBtn.addEventListener('click', requestGeneration);
 unitMmBtn.addEventListener('click', () => setUnit('mm'));
 unitInBtn.addEventListener('click', () => setUnit('in'));
 downloadBtn.addEventListener('click', downloadStl);
+shareBtn.addEventListener('click', copyShareUrl);
 
 async function loadScadDefaults() {
     const text = await fetch('./insert.scad').then(r => r.text());
@@ -261,9 +323,12 @@ boltPresetEl.addEventListener('change', () => {
 // --- Init ---
 initViewer(viewerContainer);
 loadScadDefaults().then(() => {
-    // Set preset dropdowns to match loaded defaults
-    trackPresetEl.value = 'wide-metric';
-    boltPresetEl.value = 'm8';
+    const fromUrl = applyUrlParams();
+    if (!fromUrl) {
+        // Set preset dropdowns to match loaded defaults
+        trackPresetEl.value = 'wide-metric';
+        boltPresetEl.value = 'm8';
+    }
     syncSelectTooltip(trackPresetEl);
     syncSelectTooltip(boltPresetEl);
     // After presets are set, wire up "custom" detection
