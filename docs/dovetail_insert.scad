@@ -60,8 +60,10 @@ module dv_body() {
 
 module hex_pocket() {
     // Hex bolt head recess cut into the bottom face (z=0)
+    // Rotated 30° so flat faces are parallel to the slot walls (±X), minimising width.
     translate([0, 0, -0.01])
-        cylinder(h = head_height + 0.01, r = head_radius, $fn = 6);
+        rotate([0, 0, 30])
+            cylinder(h = head_height + 0.01, r = head_radius, $fn = 6);
 }
 
 module shaft_hole() {
