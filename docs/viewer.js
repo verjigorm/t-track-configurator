@@ -7,14 +7,24 @@ const stlLoader = new STLLoader();
 let scene, camera, renderer, controls, currentMesh;
 
 export function init(container) {
+    try {
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+    } catch (e) {
+        container.style.cssText = 'display:flex;align-items:center;justify-content:center;';
+        container.innerHTML = '<p style="color:#a0a0a0;font-size:0.9rem;text-align:center;padding:16px;">3D preview unavailable<br><span style="font-size:0.75rem">WebGL is not supported on this device</span></p>';
+        return;
+    }
+
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x1a1a2e);
 
-    camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const w = container.clientWidth  || container.offsetWidth  || 300;
+    const h = container.clientHeight || container.offsetHeight || 300;
+
+    camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
     camera.position.set(40, 30, 40);
 
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(w, h);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
 
@@ -40,9 +50,12 @@ export function init(container) {
 
     // Resize handler
     const onResize = () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
+        const w = container.clientWidth  || container.offsetWidth;
+        const h = container.clientHeight || container.offsetHeight;
+        if (!w || !h) return;
+        camera.aspect = w / h;
         camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setSize(w, h);
     };
     window.addEventListener('resize', onResize);
     new ResizeObserver(onResize).observe(container);
@@ -57,6 +70,7 @@ export function init(container) {
 }
 
 export function updateModel(stlArrayBuffer) {
+    if (!renderer) return;
     // Remove previous mesh
     if (currentMesh) {
         scene.remove(currentMesh);
