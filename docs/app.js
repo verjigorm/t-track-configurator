@@ -325,10 +325,23 @@ function applyDovetailDiagramTheme() {
     container.querySelectorAll('text').forEach(el => { el.style.fill = DIAGRAM_BASE; el.style.stroke = 'none'; });
 }
 
+function fixSvgDimensions(container) {
+    const svgEl = container.querySelector('svg');
+    if (!svgEl) return;
+    const vbStr = svgEl.getAttribute('viewBox');
+    if (!vbStr) return;
+    const parts = vbStr.trim().split(/[\s,]+/).map(Number);
+    const vbW = parts[2], vbH = parts[3];
+    if (!vbW || !vbH) return;
+    svgEl.setAttribute('width',  vbW);
+    svgEl.setAttribute('height', vbH);
+}
+
 async function loadDiagram() {
     const container = document.getElementById('track-diagram');
     const text = await fetch('./t_track_diagram.svg').then(r => r.text());
     container.innerHTML = text;
+    fixSvgDimensions(container);
     applyDiagramTheme();
     paramInputs.forEach(input => {
         const map = DIAGRAM_MAP[input.dataset.param];
@@ -342,6 +355,7 @@ async function loadBoltDiagram() {
     const container = document.getElementById('bolt-diagram');
     const text = await fetch('./bolt_diagram.svg').then(r => r.text());
     container.innerHTML = text;
+    fixSvgDimensions(container);
     applyBoltDiagramTheme();
     paramInputs.forEach(input => {
         const map = BOLT_DIAGRAM_MAP[input.dataset.param];
@@ -355,6 +369,7 @@ async function loadDovetailDiagram() {
     const container = document.getElementById('dovetail-diagram');
     const text = await fetch('./dovetail_diagram.svg').then(r => r.text());
     container.innerHTML = text;
+    fixSvgDimensions(container);
     applyDovetailDiagramTheme();
     // Wire editable inputs
     paramInputs.forEach(input => {
