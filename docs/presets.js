@@ -23,5 +23,17 @@ export const DOVETAIL_DEFAULTS = {
     shaft_diameter:  5.1,
 };
 
+// Default values applied when switching to knob mode (all in mm)
+export const KNOB_DEFAULTS = {
+    n_prongs:       6,
+    outer_diameter: 40,
+    valley_depth:   5,
+    knob_thickness: 10,
+    head_width:     10,
+    head_height:    4,
+    shaft_diameter: 6.5,
+};
+
 export const TRACK_PARAM_KEYS = ['slot_width', 'lip_width', 'slot_depth', 'lip_depth'];
 export const BOLT_PARAM_KEYS  = ['head_width', 'head_height', 'shaft_diameter'];
+export const KNOB_PARAM_KEYS  = ['n_prongs', 'outer_diameter', 'valley_depth', 'knob_thickness'];

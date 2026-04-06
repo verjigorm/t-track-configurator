@@ -136,3 +136,17 @@ Analyse the functionality to implement and ask me questions if you are unsure of
  - [x] the corners parallel to the track direction should be chamfered
 - [x] the bolt head should be arranged such that the two of the faces are parallel to the sides of the slot, to save a bit of width
 - [x] there is an ability to navigate directly to either the t-track configurator or the dovetail configurator
+- [x] add a third section which will be used for generating knobs / thumbscrews with a pocket for a nut
+ - the knobs will have a configurable: 
+  - [x] number of prongs (between 2 and 100)
+  - [x] outer diameter (center to tip of the prong)
+  - [x] depth of the valley between the prongs
+  - [x] thickness of the knob
+ - [x] the prongs will be rounded over
+ - [x] the valleys between the prongs will also have a rounded bottom
+ - [x] the prongs and valleys should look similar to a wave
+ - [x] the nut pocket will have steps for printability similar to the inserts 
+ - [x] the side with the pocket will be facing the bottom in the exported STL
+ - [x] the top side will have a circular protrusion, 1mm thick with diameter of two times the bolt shaft diameter
+ - [x] the knobs will be using the same bolt dimensions and diagram as the inserts
+ - [x] the edge of the knob has a 45 degree chamfer, all along the wave line

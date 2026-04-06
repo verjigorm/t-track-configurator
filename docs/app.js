@@ -1,6 +1,6 @@
 import { init as initViewer, updateModel } from './viewer.js';
 import {
-    TRACK_PRESETS, BOLT_PRESETS, DOVETAIL_DEFAULTS,
+    TRACK_PRESETS, BOLT_PRESETS, DOVETAIL_DEFAULTS, KNOB_DEFAULTS,
     TRACK_PARAM_KEYS, BOLT_PARAM_KEYS,
 } from './presets.js';
 
@@ -24,6 +24,7 @@ const unitMmBtn      = document.getElementById('unit-mm');
 const unitInBtn      = document.getElementById('unit-in');
 const modeTtrackBtn  = document.getElementById('mode-ttrack');
 const modeDovetailBtn= document.getElementById('mode-dovetail');
+const modeKnobBtn    = document.getElementById('mode-knob');
 const renderBtn      = document.getElementById('render-btn');
 const downloadBtn    = document.getElementById('download-btn');
 const shareBtn       = document.getElementById('share-btn');
@@ -31,6 +32,8 @@ const statusEl       = document.getElementById('status');
 const viewerContainer= document.getElementById('viewer-container');
 const ttracksection  = document.getElementById('ttrack-section');
 const dovetailSection= document.getElementById('dovetail-section');
+const knobSection    = document.getElementById('knob-section');
+const insertSection  = document.getElementById('insert-section');
 const modeTitleEl    = document.getElementById('mode-title');
 const dvTopDisplay   = document.getElementById('dv_top_width_display');
 
@@ -104,7 +107,9 @@ function requestGeneration() {
     downloadBtn.disabled = true;
     currentStl = null;
     setStatus('Generating...', 'loading');
-    const scadFile = currentMode === 'dovetail' ? 'dovetail_insert.scad' : 'insert.scad';
+    const scadFile = currentMode === 'dovetail' ? 'dovetail_insert.scad'
+                   : currentMode === 'knob'     ? 'knob.scad'
+                   : 'insert.scad';
     worker.postMessage({ type: 'generate', params: getParamsMm(), scadFile });
 }
 
@@ -146,7 +151,9 @@ function downloadStl() {
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
     a.href     = url;
-    a.download = currentMode === 'dovetail' ? 'dovetail-insert.stl' : 't-track-insert.stl';
+    a.download = currentMode === 'dovetail' ? 'dovetail-insert.stl'
+               : currentMode === 'knob'     ? 'knob.stl'
+               : 't-track-insert.stl';
     a.click();
     URL.revokeObjectURL(url);
     trackEvent('stl-download', 'STL Download');
@@ -159,8 +166,8 @@ function buildShareUrl() {
     Object.entries(params).forEach(([k, v]) => sp.set(k, v));
     sp.set('u',    currentUnit);
     sp.set('mode', currentMode);
-    if (trackPresetEl.value) sp.set('tp', trackPresetEl.value);
-    if (boltPresetEl.value)  sp.set('bp', boltPresetEl.value);
+    if (currentMode === 'ttrack' && trackPresetEl.value) sp.set('tp', trackPresetEl.value);
+    if (boltPresetEl.value) sp.set('bp', boltPresetEl.value);
     return `${location.origin}${location.pathname}?${sp.toString()}`;
 }
 
@@ -182,7 +189,7 @@ function applyUrlParams() {
     if (sp.size === 0) return false;
 
     const urlMode = sp.get('mode');
-    if (urlMode === 'dovetail' || urlMode === 'ttrack') {
+    if (urlMode === 'dovetail' || urlMode === 'ttrack' || urlMode === 'knob') {
         applyMode(urlMode, false);
     }
 
@@ -231,9 +238,16 @@ const DOVETAIL_BOLT_OPTIONS = [
     { value: 'm4', label: 'M4' },
     { value: 'm6', label: 'M6' },
 ];
+const KNOB_BOLT_OPTIONS = [
+    { value: 'm6', label: 'M6' },
+    { value: 'm5', label: 'M5' },
+    { value: 'm4', label: 'M4' },
+];
 
 function updateBoltPresetOptions(mode) {
-    const options = mode === 'dovetail' ? DOVETAIL_BOLT_OPTIONS : TTRACK_BOLT_OPTIONS;
+    const options = mode === 'dovetail' ? DOVETAIL_BOLT_OPTIONS
+                  : mode === 'knob'     ? KNOB_BOLT_OPTIONS
+                  : TTRACK_BOLT_OPTIONS;
     boltPresetEl.innerHTML =
         options.map(o => `<option value="${o.value}">${o.label}</option>`).join('') +
         '<option value="custom">Custom</option>';
@@ -247,9 +261,15 @@ function applyMode(mode, render = true) {
 
     ttracksection.style.display   = mode === 'ttrack'   ? '' : 'none';
     dovetailSection.style.display  = mode === 'dovetail' ? '' : 'none';
+    knobSection.style.display      = mode === 'knob'     ? '' : 'none';
+    insertSection.style.display    = mode === 'knob'     ? 'none' : '';
+
     modeTtrackBtn.classList.toggle('active',   mode === 'ttrack');
     modeDovetailBtn.classList.toggle('active', mode === 'dovetail');
-    modeTitleEl.textContent = mode === 'dovetail' ? 'Dovetail' : 'T-Track';
+    modeKnobBtn.classList.toggle('active',     mode === 'knob');
+
+    const titles = { ttrack: 'T-Track', dovetail: 'Dovetail', knob: 'Knob' };
+    modeTitleEl.textContent = titles[mode] ?? 'T-Track';
 
     updateBoltPresetOptions(mode);
 
@@ -257,6 +277,9 @@ function applyMode(mode, render = true) {
         applyDefaults(DOVETAIL_DEFAULTS);
         boltPresetEl.value = 'm5';
         updateDerivedTopWidth();
+    } else if (mode === 'knob') {
+        applyDefaults(KNOB_DEFAULTS);
+        boltPresetEl.value = 'm6';
     } else {
         applyDefaults(ttrackScadDefaults);
         trackPresetEl.value = 'wide-metric';
@@ -448,6 +471,9 @@ modeTtrackBtn.addEventListener('click', () => {
 modeDovetailBtn.addEventListener('click', () => {
     if (currentMode !== 'dovetail') applyMode('dovetail');
 });
+modeKnobBtn.addEventListener('click', () => {
+    if (currentMode !== 'knob') applyMode('knob');
+});
 
 // --- Init ---
 
@@ -470,6 +496,9 @@ async function loadScadDefaults() {
 initViewer(viewerContainer);
 
 loadScadDefaults().then(() => {
+    // Pre-populate knob inputs with their defaults (they aren't in insert.scad)
+    applyDefaults(KNOB_DEFAULTS);
+
     const fromUrl = applyUrlParams();
     if (!fromUrl) {
         trackPresetEl.value = 'wide-metric';

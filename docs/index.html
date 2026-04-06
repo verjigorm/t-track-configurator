@@ -24,6 +24,7 @@
             <div class="mode-toggle">
                 <button id="mode-ttrack" class="active">T-Track</button>
                 <button id="mode-dovetail">Dovetail</button>
+                <button id="mode-knob">Knob</button>
             </div>
 
             <!-- Unit Toggle -->
@@ -88,6 +89,27 @@
             </div>
             </div><!-- /.dovetail-section -->
 
+            <!-- Knob Parameters -->
+            <div id="knob-section" class="param-group" style="display:none">
+                <h2>Knob</h2>
+                <div class="param-row">
+                    <label for="n_prongs">Prongs</label>
+                    <input type="number" id="n_prongs" data-param="n_prongs" data-mode="knob" data-no-unit-convert step="1" min="2" max="100">
+                </div>
+                <div class="param-row">
+                    <label for="outer_diameter">Outer Diameter</label>
+                    <input type="number" id="outer_diameter" data-param="outer_diameter" data-mode="knob" step="0.1">
+                </div>
+                <div class="param-row">
+                    <label for="valley_depth">Valley Depth</label>
+                    <input type="number" id="valley_depth" data-param="valley_depth" data-mode="knob" step="0.1">
+                </div>
+                <div class="param-row">
+                    <label for="knob_thickness">Thickness</label>
+                    <input type="number" id="knob_thickness" data-param="knob_thickness" data-mode="knob" step="0.1">
+                </div>
+            </div><!-- /.knob-section -->
+
             <!-- Bolt Dimensions + Diagram side by side -->
             <div class="track-section">
                 <div id="bolt-diagram" class="diagram-container"></div>
@@ -118,7 +140,7 @@
             </div><!-- /.track-section -->
 
             <!-- Insert Dimensions -->
-            <div class="param-group">
+            <div class="param-group" id="insert-section">
                 <h2>Insert</h2>
                 <div class="param-row">
                     <label for="insert_length">Length</label>
