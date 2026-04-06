@@ -25,9 +25,9 @@ export const DOVETAIL_DEFAULTS = {
 
 // Default values applied when switching to knob mode (all in mm)
 export const KNOB_DEFAULTS = {
-    n_prongs:       6,
+    n_prongs:       3,
     outer_diameter: 40,
-    valley_depth:   5,
+    valley_depth:   10,
     knob_thickness: 10,
     head_width:     10,
     head_height:    4,
