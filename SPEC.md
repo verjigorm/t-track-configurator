@@ -135,3 +135,4 @@ Analyse the functionality to implement and ask me questions if you are unsure of
  - [x] use the dovetail diagram svg in a similar way as with the t-track
  - [x] the corners parallel to the track direction should be chamfered
 - [x] the bolt head should be arranged such that the two of the faces are parallel to the sides of the slot, to save a bit of width
+- [x] there is an ability to navigate directly to either the t-track configurator or the dovetail configurator

@@ -241,6 +241,9 @@ function updateBoltPresetOptions(mode) {
 
 function applyMode(mode, render = true) {
     currentMode = mode;
+    const sp = new URLSearchParams(location.search);
+    sp.set('mode', mode);
+    history.replaceState(null, '', `?${sp.toString()}`);
 
     ttracksection.style.display   = mode === 'ttrack'   ? '' : 'none';
     dovetailSection.style.display  = mode === 'dovetail' ? '' : 'none';
