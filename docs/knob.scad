@@ -27,16 +27,19 @@ outer_radius = outer_diameter / 2;
 inner_radius = outer_radius - valley_depth;
 head_radius  = head_width / 2 / cos(30);
 
-// 2D prong profile: cosine-wave outline so both prong tips AND valley bottoms
-// are smoothly rounded — exactly like a wave.
-// r(a) = inner_radius + valley_depth * (cos(a * n_prongs) + 1) / 2
-//   at prong peak (cos = +1): r = outer_radius
-//   at valley     (cos = -1): r = inner_radius
+// Prong sharpness: 1 = symmetric cosine, higher = narrower prongs / wider valleys.
+prong_sharpness = 3;
+
+// 2D prong profile: powered cosine wave — prongs are narrow spikes, valleys are
+// broad and flat. t = ((cos + 1)/2)^sharpness is still 0 at valleys and 1 at
+// peaks, but spends most of its range near 0 (wide valley) and rises sharply
+// only near the peak (narrow prong).
 module knob_profile_2d() {
     steps = max(128, n_prongs * 32);
     pts = [for (i = [0 : steps - 1])
-        let (a = i * 360 / steps,
-             r = inner_radius + (outer_radius - inner_radius) * (cos(a * n_prongs) + 1) / 2)
+        let (a  = i * 360 / steps,
+             t  = pow((cos(a * n_prongs) + 1) / 2, prong_sharpness),
+             r  = inner_radius + (outer_radius - inner_radius) * t)
         [r * cos(a), r * sin(a)]
     ];
     polygon(pts);
