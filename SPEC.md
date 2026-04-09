@@ -150,3 +150,4 @@ Analyse the functionality to implement and ask me questions if you are unsure of
  - [x] the top side will have a circular protrusion, 1mm thick with diameter of two times the bolt shaft diameter
  - [x] the knobs will be using the same bolt dimensions and diagram as the inserts
  - [x] the edge of the knob has a 45 degree chamfer, all along the wave line
+ - [x] use the included knob diagram and highlight the valley depth and diameter measurements on the knob diagram

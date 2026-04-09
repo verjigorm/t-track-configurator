@@ -315,6 +315,11 @@ const DOVETAIL_DIAGRAM_MAP = {
 // The derived top-width display highlights T in the diagram on focus
 const DOVETAIL_TOP_MAP = { line: 'infoline-2-path-effect1', label: 'text5' };
 
+const KNOB_DIAGRAM_MAP = {
+    outer_diameter: { line: 'infoline-0-path-effect17', label: 'text18' },
+    valley_depth:   { line: 'infoline-0-path-effect15', label: 'text17' },
+};
+
 function highlightIn(container, { line, label }, active) {
     const color  = active ? DIAGRAM_HIGHLIGHT : DIAGRAM_BASE;
     const lineEl = container.querySelector(`[id="${line}"]`);
@@ -347,6 +352,17 @@ function applyDovetailDiagramTheme() {
     const container = document.getElementById('dovetail-diagram');
     const shape = container.querySelector('#path1');
     if (shape) { shape.style.fill = '#c8d4e0'; shape.style.stroke = '#c8d4e0'; }
+    container.querySelectorAll('.measure-line').forEach(el => { el.style.stroke = DIAGRAM_BASE; });
+    container.querySelectorAll('text').forEach(el => { el.style.fill = DIAGRAM_BASE; el.style.stroke = 'none'; });
+}
+
+function applyKnobDiagramTheme() {
+    const container = document.getElementById('knob-diagram');
+    ['path3','path5','path6','path7','path10'].forEach(id => {
+        const el = container.querySelector(`#${id}`);
+        if (el) el.style.stroke = '#c8d4e0';
+    });
+
     container.querySelectorAll('.measure-line').forEach(el => { el.style.stroke = DIAGRAM_BASE; });
     container.querySelectorAll('text').forEach(el => { el.style.fill = DIAGRAM_BASE; el.style.stroke = 'none'; });
 }
@@ -412,6 +428,28 @@ async function loadDovetailDiagram() {
     // Live-update derived top width whenever any dovetail input changes
     ['dv_bottom_width', 'dv_height', 'wall_angle'].forEach(id => {
         document.getElementById(id)?.addEventListener('input', updateDerivedTopWidth);
+    });
+}
+
+async function loadKnobDiagram() {
+    const container = document.getElementById('knob-diagram');
+    let text = await fetch('./knob_diagram.svg').then(r => r.text());
+    // Prefix marker IDs to avoid conflicts with identically-named markers in
+    // other inlined SVGs (bolt/t-track diagrams) which would cause the browser
+    // to resolve url(#ArrowDIN-*) against the wrong <marker> element.
+    text = text
+        .replace(/id="ArrowDIN-start"/g,       'id="knob-ArrowDIN-start"')
+        .replace(/id="ArrowDIN-end"/g,         'id="knob-ArrowDIN-end"')
+        .replace(/url\(#ArrowDIN-start\)/g,    'url(#knob-ArrowDIN-start)')
+        .replace(/url\(#ArrowDIN-end\)/g,      'url(#knob-ArrowDIN-end)');
+    container.innerHTML = text;
+    fixSvgDimensions(container);
+    applyKnobDiagramTheme();
+    paramInputs.forEach(input => {
+        const map = KNOB_DIAGRAM_MAP[input.dataset.param];
+        if (!map) return;
+        input.addEventListener('focus', () => highlightIn(container, map, true));
+        input.addEventListener('blur',  () => highlightIn(container, map, false));
     });
 }
 
@@ -514,3 +552,4 @@ loadScadDefaults().then(() => {
 loadDiagram();
 loadBoltDiagram();
 loadDovetailDiagram();
+loadKnobDiagram();
