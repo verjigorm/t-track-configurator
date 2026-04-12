@@ -152,3 +152,4 @@ Analyse the functionality to implement and ask me questions if you are unsure of
  - [x] the edge of the knob has a 45 degree chamfer, all along the wave line
  - [x] use the included knob diagram and highlight the valley depth and diameter measurements on the knob diagram
  - [x] the number of prongs of the knob is an integer, and shouldn't be recalculated when switching between inches and mm
+ - [x] decimal numbers should have a maximum precision of 2 decimal places

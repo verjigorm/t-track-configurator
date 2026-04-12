@@ -84,7 +84,7 @@ function updateDerivedTopWidth() {
     if (isNaN(bw) || isNaN(h) || isNaN(a)) return;
     const twMm = bw - 2 * h * Math.tan(a * Math.PI / 180);
     dvTopDisplay.value = currentUnit === 'in'
-        ? parseFloat((twMm / MM_PER_INCH).toFixed(3))
+        ? parseFloat((twMm / MM_PER_INCH).toFixed(2))
         : parseFloat(twMm.toFixed(2));
 }
 
@@ -121,7 +121,7 @@ function setUnit(unit) {
         let val = parseFloat(input.value);
         if (isNaN(val)) return;
         val = unit === 'in' ? val / MM_PER_INCH : val * MM_PER_INCH;
-        input.value = parseFloat(val.toFixed(3));
+        input.value = parseFloat(val.toFixed(2));
         input.step  = unit === 'in' ? '0.01' : '0.1';
     });
     currentUnit = unit;
@@ -137,7 +137,7 @@ function applyDefaults(defaults) {
         if (!input) return;
         const isAngle = 'noUnitConvert' in input.dataset;
         const displayVal = (!isAngle && currentUnit === 'in')
-            ? parseFloat((mmVal / MM_PER_INCH).toFixed(3))
+            ? parseFloat((mmVal / MM_PER_INCH).toFixed(2))
             : mmVal;
         input.value = displayVal;
         input.dataset.defaultMm = mmVal;
@@ -201,7 +201,7 @@ function applyUrlParams() {
         // Values are stored in mm (or degrees for angle); convert to display unit if needed
         const isAngle = 'noUnitConvert' in input.dataset;
         input.value = (!isAngle && sp.get('u') === 'in')
-            ? parseFloat((v / MM_PER_INCH).toFixed(3))
+            ? parseFloat((v / MM_PER_INCH).toFixed(2))
             : v;
         input.dataset.defaultMm = v;
     });
@@ -461,7 +461,7 @@ function applyPreset(presetValues) {
         if (!input) return;
         const isAngle = 'noUnitConvert' in input.dataset;
         const displayVal = (!isAngle && currentUnit === 'in')
-            ? parseFloat((mmVal / MM_PER_INCH).toFixed(3))
+            ? parseFloat((mmVal / MM_PER_INCH).toFixed(2))
             : mmVal;
         input.value = displayVal;
         input.dataset.defaultMm = mmVal;
