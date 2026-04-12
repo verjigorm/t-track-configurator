@@ -97,7 +97,7 @@ function getParamsMm() {
         let val = parseFloat(input.value);
         if (isNaN(val)) val = parseFloat(input.dataset.defaultMm);
         // Angle params are in degrees — never multiplied by MM_PER_INCH
-        if (currentUnit === 'in' && !input.dataset.noUnitConvert) val *= MM_PER_INCH;
+        if (currentUnit === 'in' && !('noUnitConvert' in input.dataset)) val *= MM_PER_INCH;
         params[input.dataset.param] = val;
     });
     return params;
@@ -117,7 +117,7 @@ function requestGeneration() {
 function setUnit(unit) {
     if (unit === currentUnit) return;
     paramInputs.forEach(input => {
-        if (input.dataset.noUnitConvert) return;
+        if ('noUnitConvert' in input.dataset) return;
         let val = parseFloat(input.value);
         if (isNaN(val)) return;
         val = unit === 'in' ? val / MM_PER_INCH : val * MM_PER_INCH;
@@ -135,7 +135,7 @@ function applyDefaults(defaults) {
     Object.entries(defaults).forEach(([key, mmVal]) => {
         const input = document.querySelector(`input[data-param="${key}"]`);
         if (!input) return;
-        const isAngle = !!input.dataset.noUnitConvert;
+        const isAngle = 'noUnitConvert' in input.dataset;
         const displayVal = (!isAngle && currentUnit === 'in')
             ? parseFloat((mmVal / MM_PER_INCH).toFixed(3))
             : mmVal;
@@ -199,7 +199,7 @@ function applyUrlParams() {
         const v = parseFloat(mmVal);
         if (isNaN(v)) return;
         // Values are stored in mm (or degrees for angle); convert to display unit if needed
-        const isAngle = !!input.dataset.noUnitConvert;
+        const isAngle = 'noUnitConvert' in input.dataset;
         input.value = (!isAngle && sp.get('u') === 'in')
             ? parseFloat((v / MM_PER_INCH).toFixed(3))
             : v;
@@ -215,7 +215,7 @@ function applyUrlParams() {
     if (unit === 'in') {
         // Step sizes for non-angle inputs
         paramInputs.forEach(input => {
-            if (!input.dataset.noUnitConvert) input.step = '0.01';
+            if (!('noUnitConvert' in input.dataset)) input.step = '0.01';
         });
         currentUnit = 'in';
         unitMmBtn.classList.remove('active');
@@ -459,7 +459,7 @@ function applyPreset(presetValues) {
     Object.entries(presetValues).forEach(([key, mmVal]) => {
         const input = document.querySelector(`input[data-param="${key}"]`);
         if (!input) return;
-        const isAngle = !!input.dataset.noUnitConvert;
+        const isAngle = 'noUnitConvert' in input.dataset;
         const displayVal = (!isAngle && currentUnit === 'in')
             ? parseFloat((mmVal / MM_PER_INCH).toFixed(3))
             : mmVal;
